@@ -1,3 +1,4 @@
+import { speda, franklin } from "./fonts";
 import "./globals.css";
 
 export const metadata = {
@@ -5,9 +6,12 @@ export const metadata = {
   description: "پارکێتی لوکس و شکۆمەند بۆ ماڵی تۆ",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {  return (
-    <html lang="ckb" dir="rtl">
-      <body>{children}</body>
+export default function RootLayout({ children }) {
+  return (
+    <html lang="ckb" dir="rtl" className={`${speda.variable} ${franklin.variable}`}>
+      <body className="font-sans">
+        {children}
+      </body>
     </html>
   );
 }
