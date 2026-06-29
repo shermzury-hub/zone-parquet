@@ -5,8 +5,7 @@ export const metadata = {
   description: "پارکێتی لوکس و شکۆمەند بۆ ماڵی تۆ",
 };
 
-export default function RootLayout({ children }) {
-  return (
+export default function RootLayout({ children }: { children: React.ReactNode }) {  return (
     <html lang="ckb" dir="rtl">
       <body>{children}</body>
     </html>
