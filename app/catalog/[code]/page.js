@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import AddToQuoteButton from "@/app/components/AddToQuoteButton";
 
 export const revalidate = 60;
 
@@ -48,7 +49,7 @@ export default async function ProductPage({ params }) {
             </div>
           )}
 
-          <button className="zp-product-cta">زیادکردن بۆ داوای نرخ</button>
+          <AddToQuoteButton product={product} />
           <p className="zp-product-note">
             نرخ بە تایبەتی بۆ تۆ دیاری دەکرێت — داواکارییەکەت بنێرە و پەیوەندیت پێوە دەکەین.
           </p>

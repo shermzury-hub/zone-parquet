@@ -1,57 +1,52 @@
 @import "tailwindcss";
 
-/* ===== ناساندنی فۆنتەکان (چارەسەرەکەی خۆمان) ===== */
+/* ===== فۆنتەکان (@font-face) ===== */
 @font-face {
-  font-family: 'Speda';
-  src: url('/fonts/Speda.ttf') format('truetype');
+  font-family: "Speda";
+  src: url("/fonts/Speda.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
-  font-family: 'Speda';
-  src: url('/fonts/Speda-Bold.ttf') format('truetype');
+  font-family: "Speda";
+  src: url("/fonts/Speda-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Franklin Gothic Book";
+  src: url("/fonts/Franklin_Gothic_Book_Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Franklin Gothic Book";
+  src: url("/fonts/Franklin_Gothic_Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/Franklin_Book.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/Franklin_Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ===== برانندی زۆن پارکێت (قۆناغی ٠ و ١) ===== */
+/* ===== براندی زۆن پارکێت ===== */
 :root {
-  --zp-primary: #936639;    /* قاوەیی — کردار */
-  --zp-secondary: #9CA3AF;  /* خۆڵەمێشی — نووسین */
-  --zp-background: #F5F5F0; /* پاشبنەما */
-  --font-speda: 'Speda', system-ui, sans-serif;
-  --font-franklin: 'Franklin', system-ui, sans-serif;
+  --zp-primary: #936639;
+  --zp-secondary: #9CA3AF;
+  --zp-background: #F5F5F0;
 }
 
-/* ===== فۆنتەکان و ڕێکخستنی گشتی ===== */
+/* ===== ڕێکخستنی گشتی ===== */
 body {
   background-color: var(--zp-background);
   color: #1a1a1a;
   margin: 0;
-  font-family: var(--font-speda), system-ui, "Segoe UI", Tahoma, sans-serif;
+  font-family: "Speda", system-ui, "Segoe UI", Tahoma, sans-serif;
 }
 
 .font-en {
-  font-family: var(--font-franklin), system-ui, sans-serif;
+  font-family: "Franklin Gothic Book", system-ui, sans-serif;
 }
 
 /* ===== هیرۆ و بەشی سەرەکی ===== */
@@ -164,10 +159,22 @@ body {
   border-radius: 8px;
   font-size: 0.95rem;
   transition: opacity 0.2s ease;
+  position: relative;
 }
 
 .zp-cart-btn:hover {
   opacity: 0.9;
+}
+
+.zp-cart-count {
+  display: inline-block;
+  background: #ffffff;
+  color: var(--zp-primary);
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+  margin-right: 0.35rem;
 }
 
 /* ===== فووتەر ===== */
@@ -215,6 +222,7 @@ body {
   font-size: 0.9rem;
   color: #8f8f8f;
 }
+
 /* ===== پەڕەی کاتاڵۆگ ===== */
 .zp-catalog {
   max-width: 1200px;
@@ -417,7 +425,12 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.zp-product-cta:hover {
+.zp-product-cta.added {
+  background: #6b8e4e;
+  cursor: default;
+}
+
+.zp-product-cta:hover:not(.added) {
   opacity: 0.9;
 }
 
@@ -433,220 +446,172 @@ body {
   }
 }
 
-/* ===== پەڕەی کاتاڵۆگ ===== */
-.zp-catalog {
-  max-width: 1200px;
+/* ===== سەبەتەی داوای نرخ ===== */
+.zp-cart {
+  max-width: 1100px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
 }
 
-.zp-catalog-head {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.zp-catalog-title {
+.zp-cart-title {
   font-size: 2.5rem;
   color: var(--zp-primary);
-  margin: 0 0 0.5rem 0;
-}
-
-.zp-catalog-sub {
-  color: var(--zp-secondary);
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-.zp-filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-}
-
-.zp-filter-label {
-  color: #555;
-  font-size: 0.95rem;
-  margin-left: 0.5rem;
-}
-
-.zp-filter-btn {
-  background: #ffffff;
-  border: 1px solid #ddd;
-  color: #333;
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-}
-
-.zp-filter-btn:hover {
-  border-color: var(--zp-primary);
-}
-
-.zp-filter-btn.active {
-  background: var(--zp-primary);
-  color: #ffffff;
-  border-color: var(--zp-primary);
-}
-
-.zp-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.75rem;
-  margin-top: 2rem;
-}
-
-.zp-card {
-  background: #ffffff;
-  border-radius: 14px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.zp-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-}
-
-.zp-card-img {
-  aspect-ratio: 1 / 1;
-  background: #eee;
-}
-
-.zp-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.zp-card-body {
-  padding: 1.1rem 1.25rem;
-}
-
-.zp-card-title {
-  font-size: 1.2rem;
-  margin: 0 0 0.3rem 0;
-  color: #1a1a1a;
-}
-
-.zp-card-code {
-  color: var(--zp-secondary);
-  font-size: 0.9rem;
-  margin: 0 0 0.9rem 0;
-}
-
-.zp-card-cta {
-  color: var(--zp-primary);
-  font-weight: bold;
-  font-size: 0.95rem;
-}
-
-.zp-empty {
+  margin: 0 0 2rem 0;
   text-align: center;
-  color: var(--zp-secondary);
-  padding: 3rem;
 }
 
-/* ===== پەڕەی وردەکاریی بەرهەم ===== */
-.zp-product {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem;
-}
-
-.zp-back {
-  color: var(--zp-primary);
-  text-decoration: none;
-  font-size: 1rem;
+a.zp-product-cta {
   display: inline-block;
+  text-decoration: none;
+}
+
+.zp-cart-empty,
+.zp-cart-success {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.zp-cart-empty p,
+.zp-cart-success p {
+  color: #555;
+  font-size: 1.15rem;
   margin-bottom: 1.5rem;
 }
 
-.zp-product-grid {
+.zp-cart-success h1 {
+  color: var(--zp-primary);
+  font-size: 2.2rem;
+}
+
+.zp-cart-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 2rem;
   align-items: start;
 }
 
-.zp-product-img {
-  aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #eee;
-}
-
-.zp-product-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.zp-product-title {
-  font-size: 2.2rem;
-  color: var(--zp-primary);
-  margin: 0 0 0.5rem 0;
-}
-
-.zp-product-code,
-.zp-product-thickness {
-  color: var(--zp-secondary);
-  margin: 0.2rem 0;
-}
-
-.zp-product-desc {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #333;
-  margin: 1.5rem 0;
-}
-
-.zp-product-features {
+.zp-cart-items {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-bottom: 2rem;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.zp-feature-tag {
-  background: #efe7dd;
-  color: var(--zp-primary);
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
+.zp-cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.zp-cart-item-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.zp-cart-item-info {
+  flex: 1;
+}
+
+.zp-cart-item-info h3 {
+  margin: 0 0 0.2rem 0;
+  font-size: 1.1rem;
+}
+
+.zp-cart-item-info p {
+  margin: 0;
+  color: var(--zp-secondary);
   font-size: 0.9rem;
 }
 
-.zp-product-cta {
-  background: var(--zp-primary);
-  color: #ffffff;
+.zp-cart-item-m2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.zp-cart-item-m2 label {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.zp-cart-item-m2 input {
+  width: 90px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.zp-cart-remove {
+  background: transparent;
   border: none;
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
-  border-radius: 10px;
+  color: #c0392b;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  padding: 0.5rem;
+  flex-shrink: 0;
 }
 
-.zp-product-cta:hover {
-  opacity: 0.9;
+.zp-cart-form {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.75rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
 
-.zp-product-note {
-  color: var(--zp-secondary);
+.zp-cart-form h2 {
+  margin: 0 0 1.25rem 0;
+  font-size: 1.4rem;
+  color: var(--zp-primary);
+}
+
+.zp-cart-form label {
+  display: block;
+  margin: 0.9rem 0 0.35rem 0;
   font-size: 0.95rem;
+  color: #444;
+}
+
+.zp-cart-form input,
+.zp-cart-form textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.zp-cart-form input:focus,
+.zp-cart-form textarea:focus {
+  outline: none;
+  border-color: var(--zp-primary);
+}
+
+.zp-cart-submit {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.zp-cart-error {
+  color: #c0392b;
   margin-top: 1rem;
+  font-size: 0.95rem;
 }
 
 @media (max-width: 768px) {
-  .zp-product-grid {
+  .zp-cart-layout {
     grid-template-columns: 1fr;
+  }
+  .zp-cart-item {
+    flex-wrap: wrap;
   }
 }
