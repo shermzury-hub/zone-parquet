@@ -615,3 +615,217 @@ a.zp-product-cta {
     flex-wrap: wrap;
   }
 }
+/* ===== مۆداڵی چوونەژوورەوە ===== */
+.zp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.zp-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.zp-modal-close {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #888;
+}
+
+.zp-modal-title {
+  color: var(--zp-primary);
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.zp-modal label {
+  display: block;
+  margin: 0.8rem 0 0.35rem 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.zp-modal input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.zp-modal input:focus {
+  outline: none;
+  border-color: var(--zp-primary);
+}
+
+.zp-modal-error {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin: 0.8rem 0 0 0;
+}
+
+.zp-modal-submit {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* ===== داشبۆردی ئەدمین ===== */
+.zp-admin {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.zp-admin-loading,
+.zp-admin-empty {
+  text-align: center;
+  color: var(--zp-secondary);
+  padding: 3rem;
+}
+
+.zp-admin-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.zp-admin-title {
+  color: var(--zp-primary);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.zp-admin-sub {
+  color: var(--zp-secondary);
+  margin: 0.3rem 0 0 0;
+}
+
+.zp-admin-logout {
+  background: transparent;
+  border: 1px solid #c0392b;
+  color: #c0392b;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.zp-admin-logout:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+.zp-admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.zp-req-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.zp-req-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.zp-req-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+}
+
+.zp-req-date {
+  color: var(--zp-secondary);
+  font-size: 0.85rem;
+  margin: 0.3rem 0 0 0;
+}
+
+.zp-req-delete {
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.zp-req-delete:hover {
+  opacity: 0.9;
+}
+
+.zp-req-contact {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.zp-req-wa {
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.zp-req-note {
+  background: #f5f5f0;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  color: #555;
+  font-size: 0.95rem;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.zp-req-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.zp-req-table th,
+.zp-req-table td {
+  text-align: right;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.zp-req-table th {
+  color: var(--zp-secondary);
+  font-weight: normal;
+  font-size: 0.85rem;
+}
