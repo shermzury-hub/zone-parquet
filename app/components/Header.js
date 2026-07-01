@@ -18,7 +18,6 @@ export default function Header() {
   function handleLogoClick() {
     clickCount.current += 1;
 
-    // سێ کرتەی خێرا = کردنەوەی چوونەژوورەوەی نهێنی
     if (clickCount.current === 3) {
       clearTimeout(clickTimer.current);
       clickCount.current = 0;
@@ -26,7 +25,6 @@ export default function Header() {
       return;
     }
 
-    // یەک کرتە = گەڕانەوە بۆ سەرەتا
     clearTimeout(clickTimer.current);
     clickTimer.current = setTimeout(() => {
       if (clickCount.current === 1) {

@@ -9,13 +9,13 @@ export default function Footer() {
         <div className="zp-footer-contact">
           <p>
             وەتسئاپ:{" "}
-            <a href="https://wa.me/9647506733630" className="zp-footer-link font-en">
+            <a href="https://wa.me/9647506733630" className="zp-footer-link">
               +964 750 673 3630
             </a>
           </p>
           <p>
             ئیمەیڵ:{" "}
-            <a href="mailto:info@zoneparquet.com" className="zp-footer-link font-en">
+            <a href="mailto:info@zoneparquet.com" className="zp-footer-link">
               info@zoneparquet.com
             </a>
           </p>

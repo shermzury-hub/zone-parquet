@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import ProductsManager from "@/app/components/ProductsManager";
 
 export default function AdminPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [authed, setAuthed] = useState(false);
+  const [tab, setTab] = useState("requests");
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export default function AdminPage() {
   async function checkAuth() {
     const { data } = await supabase.auth.getSession();
     if (!data.session) {
-      router.push("/"); // ئەگەر نەچووبێتە ژوورەوە، دەرکراوە بۆ سەرەتا
+      router.push("/");
       return;
     }
     setAuthed(true);
@@ -25,7 +27,6 @@ export default function AdminPage() {
   }
 
   async function loadRequests() {
-    setLoading(true);
     const { data } = await supabase
       .from("quote_requests")
       .select("*")
@@ -64,70 +65,88 @@ export default function AdminPage() {
   return (
     <main className="zp-admin">
       <div className="zp-admin-head">
-        <div>
-          <h1 className="zp-admin-title">داشبۆردی بەڕێوەبردن</h1>
-          <p className="zp-admin-sub">{requests.length} داواکاری</p>
-        </div>
+        <h1 className="zp-admin-title">داشبۆردی بەڕێوەبردن</h1>
         <button className="zp-admin-logout" onClick={logout}>چوونەدەرەوە</button>
       </div>
 
-      {requests.length === 0 ? (
-        <p className="zp-admin-empty">هێشتا هیچ داواکارییەک نییە.</p>
-      ) : (
-        <div className="zp-admin-list">
-          {requests.map((r) => (
-            <div key={r.id} className="zp-req-card">
-              <div className="zp-req-header">
-                <div>
-                  <h3>{r.customer_name}</h3>
-                  <p className="zp-req-date">
-                    {new Date(r.created_at).toLocaleString("en-GB")}
-                  </p>
+      <div className="zp-admin-tabs">
+        <button
+          className={`zp-admin-tab ${tab === "requests" ? "active" : ""}`}
+          onClick={() => setTab("requests")}
+        >
+          داواکارییەکان ({requests.length})
+        </button>
+        <button
+          className={`zp-admin-tab ${tab === "products" ? "active" : ""}`}
+          onClick={() => setTab("products")}
+        >
+          بەرهەمەکان
+        </button>
+      </div>
+
+      {tab === "requests" && (
+        <>
+          {requests.length === 0 ? (
+            <p className="zp-admin-empty">هێشتا هیچ داواکارییەک نییە.</p>
+          ) : (
+            <div className="zp-admin-list">
+              {requests.map((r) => (
+                <div key={r.id} className="zp-req-card">
+                  <div className="zp-req-header">
+                    <div>
+                      <h3>{r.customer_name}</h3>
+                      <p className="zp-req-date">
+                        {new Date(r.created_at).toLocaleString("en-GB")}
+                      </p>
+                    </div>
+                    <button
+                      className="zp-req-delete"
+                      onClick={() => deleteRequest(r.id)}
+                    >
+                      سڕینەوە
+                    </button>
+                  </div>
+
+                  <div className="zp-req-contact">
+                    <span>📞 {r.customer_phone}</span>
+                    <a
+                      href={waLink(r.customer_phone)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="zp-req-wa"
+                    >
+                      پەیوەندی بە وەتسئاپ
+                    </a>
+                  </div>
+
+                  {r.note && <p className="zp-req-note">تێبینی: {r.note}</p>}
+
+                  <table className="zp-req-table">
+                    <thead>
+                      <tr>
+                        <th>کۆد</th>
+                        <th>مۆدێل</th>
+                        <th>ڕووبەر (m²)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(r.items || []).map((it, idx) => (
+                        <tr key={idx}>
+                          <td>{it.code}</td>
+                          <td>{it.title}</td>
+                          <td>{it.m2}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <button
-                  className="zp-req-delete"
-                  onClick={() => deleteRequest(r.id)}
-                >
-                  سڕینەوە
-                </button>
-              </div>
-
-              <div className="zp-req-contact">
-                <span>📞 {r.customer_phone}</span>
-                <a
-                  href={waLink(r.customer_phone)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="zp-req-wa"
-                >
-                  پەیوەندی بە وەتسئاپ
-                </a>
-              </div>
-
-              {r.note && <p className="zp-req-note">تێبینی: {r.note}</p>}
-
-              <table className="zp-req-table">
-                <thead>
-                  <tr>
-                    <th>کۆد</th>
-                    <th>مۆدێل</th>
-                    <th>ڕووبەر (m²)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(r.items || []).map((it, idx) => (
-                    <tr key={idx}>
-                      <td>{it.code}</td>
-                      <td>{it.title}</td>
-                      <td>{it.m2}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
+
+      {tab === "products" && <ProductsManager />}
     </main>
   );
 }
