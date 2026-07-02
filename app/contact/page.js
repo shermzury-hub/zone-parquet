@@ -1,102 +1,87 @@
 "use client";
 
 import { useState } from "react";
-
-const WHATSAPP_NUMBER = "9647506733630";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+  const [type, setType] = useState("general");
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
   function sendWhatsApp() {
     if (!name.trim() || !message.trim()) {
-      alert("تکایە ناو و پەیامەکەت بنووسە.");
+      alert(t("contact_alert_fill"));
       return;
     }
-    const text =
-      `سڵاو، ناوم ${name}ـە.\n` +
-      (phone.trim() ? `ژمارەی پەیوەندی: ${phone}\n` : "") +
-      `\n${message}`;
-
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    const intro = type === "quote" ? t("wa_intro_quote") : t("wa_intro_general");
+    const text = `${intro}\n${t("wa_name")}: ${name}\n\n${message}`;
+    const url = "https://wa.me/9647506733630?text=" + encodeURIComponent(text);
     window.open(url, "_blank");
   }
 
   return (
     <main className="zp-contact">
       <div className="zp-contact-head">
-        <h1 className="zp-contact-title">پەیوەندیمان پێوە بکە</h1>
-        <p className="zp-contact-sub">
-          پرسیارت هەیە یان دەتەوێت نرخ بزانیت؟ ئێمە لێرەین بۆ یارمەتیدانت.
-        </p>
+        <h1 className="zp-contact-title">{t("contact_title")}</h1>
+        <p className="zp-contact-subtitle">{t("contact_subtitle")}</p>
       </div>
 
-      <div className="zp-contact-layout">
-        <div className="zp-contact-methods">
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
-            target="_blank"
-            rel="noreferrer"
-            className="zp-contact-card zp-contact-wa"
+      <div className="zp-contact-card">
+        <label className="zp-contact-label">{t("contact_type_label")}</label>
+        <div className="zp-contact-types">
+          <button
+            className={`zp-contact-type ${type === "general" ? "active" : ""}`}
+            onClick={() => setType("general")}
           >
-            <span className="zp-contact-icon">💬</span>
-            <div>
-              <h3>وەتسئاپ</h3>
-              <p>+964 750 673 3630</p>
-            </div>
-          </a>
-
-          <a href="mailto:info@zoneparquet.com" className="zp-contact-card">
-            <span className="zp-contact-icon">✉️</span>
-            <div>
-              <h3>ئیمەیڵ</h3>
-              <p>info@zoneparquet.com</p>
-            </div>
-          </a>
-
-          <a href="tel:+9647506733630" className="zp-contact-card">
-            <span className="zp-contact-icon">📞</span>
-            <div>
-              <h3>تەلەفۆن</h3>
-              <p>+964 750 673 3630</p>
-            </div>
-          </a>
+            {t("contact_type_general")}
+          </button>
+          <button
+            className={`zp-contact-type ${type === "quote" ? "active" : ""}`}
+            onClick={() => setType("quote")}
+          >
+            {t("contact_type_quote")}
+          </button>
         </div>
 
-        <div className="zp-contact-form">
-          <h2>پەیامێکمان بۆ بنێرە</h2>
-          <p className="zp-contact-form-note">
-            فۆرمەکە پڕبکەرەوە و پەیامەکەت ڕاستەوخۆ لە وەتسئاپ بۆمان دەگات.
-          </p>
+        <label className="zp-contact-label">{t("contact_name")}</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder={t("contact_name_ph")}
+        />
 
-          <label>ناوی تەواو *</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="ناوەکەت بنووسە"
-          />
+        <label className="zp-contact-label">{t("contact_message")}</label>
+        <textarea
+          rows="4"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder={t("contact_message_ph")}
+        />
 
-          <label>ژمارەی مۆبایل</label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="07XX XXX XXXX"
-          />
+        <button className="zp-contact-send" onClick={sendWhatsApp}>
+          {t("contact_send_wa")}
+        </button>
+      </div>
 
-          <label>پەیام *</label>
-          <textarea
-            rows="4"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="پەیامەکەت لێرە بنووسە..."
-          />
-
-          <button className="zp-product-cta zp-contact-submit" onClick={sendWhatsApp}>
-            ناردن بە وەتسئاپ
-          </button>
+      <div className="zp-contact-direct">
+        <p className="zp-contact-direct-title">{t("contact_direct_title")}</p>
+        <div className="zp-contact-direct-links">
+          <a
+            href="https://wa.me/9647506733630"
+            target="_blank"
+            rel="noreferrer"
+            className="zp-contact-direct-btn wa"
+          >
+            {t("contact_wa_direct")}
+          </a>
+          <a
+            href="mailto:info@zoneparquet.com"
+            className="zp-contact-direct-btn email"
+          >
+            {t("contact_email_direct")}
+          </a>
         </div>
       </div>
     </main>

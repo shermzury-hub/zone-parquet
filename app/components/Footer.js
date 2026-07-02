@@ -1,20 +1,26 @@
+"use client";
+
+import { useLanguage } from "@/app/context/LanguageContext";
+
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="zp-footer">
       <div className="zp-footer-inner">
         <div className="zp-footer-brand">
           <h3>زۆن پارکێت</h3>
-          <p>جوانی و شکۆمەندی بۆ هەر ماڵێک</p>
+          <p>{t("footer_tagline")}</p>
         </div>
         <div className="zp-footer-contact">
           <p>
-            وەتسئاپ:{" "}
+            {t("footer_whatsapp")}:{" "}
             <a href="https://wa.me/9647506733630" className="zp-footer-link">
               +964 750 673 3630
             </a>
           </p>
           <p>
-            ئیمەیڵ:{" "}
+            {t("footer_email")}:{" "}
             <a href="mailto:info@zoneparquet.com" className="zp-footer-link">
               info@zoneparquet.com
             </a>
@@ -22,7 +28,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="zp-footer-bottom">
-        <p>© 2026 زۆن پارکێت — هەموو مافەکان پارێزراون</p>
+        <p>{t("footer_rights")}</p>
       </div>
     </footer>
   );

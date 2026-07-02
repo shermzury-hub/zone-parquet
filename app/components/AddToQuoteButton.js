@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { useCart } from "@/app/context/CartContext";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function AddToQuoteButton({ product }) {
   const { addItem, items } = useCart();
+  const { t } = useLanguage();
   const [added, setAdded] = useState(false);
 
-  // پاراستن ئەگەر items هێشتا بار نەکرا بوو
-  const safeItems = Array.isArray(items) ? items : [];
-  const alreadyInCart = safeItems.some((i) => i.code === product.code);
+  const alreadyInCart = items.some((i) => i.code === product.code);
 
   function handleAdd() {
     addItem(product);
@@ -19,14 +19,14 @@ export default function AddToQuoteButton({ product }) {
   if (alreadyInCart || added) {
     return (
       <button className="zp-product-cta added" disabled>
-        ✓ زیادکرا بۆ داوای نرخ
+        {t("product_added")}
       </button>
     );
   }
 
   return (
     <button className="zp-product-cta" onClick={handleAdd}>
-      زیادکردن بۆ داوای نرخ
+      {t("product_add")}
     </button>
   );
 }

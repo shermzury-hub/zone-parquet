@@ -1,14 +1,15 @@
-import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+"use client";
 
-export const revalidate = 60;
+import Link from "next/link";
+import { useLanguage } from "@/app/context/LanguageContext";
+import { localized } from "@/lib/translations";
 
 const FEATURES = [
-  { key: "water", label: "دژە ئاو", desc: "بەرگری تەواو لە شێ و ئاو" },
-  { key: "fire", label: "دژە ئاگر", desc: "پارێزراو لە گڕ و گەرمی" },
-  { key: "sound", label: "دژە دەنگ", desc: "هێمنیی زیاتر بۆ ماڵەکەت" },
-  { key: "scratch", label: "دژە خوران", desc: "ساڵانێکی زۆر نوێ دەمێنێتەوە" },
-  { key: "eco", label: "دۆستی ژینگە", desc: "کەرەستەی پاک و سەلامەت" },
+  { key: "water", t: "feat_water", d: "feat_water_d" },
+  { key: "fire", t: "feat_fire", d: "feat_fire_d" },
+  { key: "sound", t: "feat_sound", d: "feat_sound_d" },
+  { key: "scratch", t: "feat_scratch", d: "feat_scratch_d" },
+  { key: "eco", t: "feat_eco", d: "feat_eco_d" },
 ];
 
 function FeatureIcon({ type }) {
@@ -62,29 +63,24 @@ function FeatureIcon({ type }) {
   );
 }
 
-export default async function Home() {
-  const { data: featured } = await supabase
-    .from("products_public")
-    .select("*")
-    .order("sort_order", { ascending: true })
-    .limit(3);
-
-  const products = featured || [];
+export default function HomeClient({ products }) {
+  const { lang, t } = useLanguage();
 
   return (
     <main>
       {/* هیرۆ */}
       <section className="zp-home-hero">
         <div className="zp-home-hero-text">
-          <span className="zp-home-eyebrow">پارکێتی لوکس</span>
-          <h1 className="zp-home-title">شکۆمەندی، لە هەر هەنگاوێکدا</h1>
-          <p className="zp-home-subtitle">
-            ١١٤ دیزاینی هەڵبژاردە بۆ ئەوانەی تەنها باشترین دەخوازن. لە هەر
-            شوێنێکی وڵات بیت، دیزاینی خەونەکانت دەگاتە بەردەستت.
-          </p>
+          <span className="zp-home-eyebrow">{t("home_eyebrow")}</span>
+          <h1 className="zp-home-title">{t("home_title")}</h1>
+          <p className="zp-home-subtitle">{t("home_subtitle")}</p>
           <div className="zp-home-hero-actions">
-            <Link href="/catalog" className="zp-btn-primary">کۆلێکشنەکان ببینە</Link>
-            <Link href="/about" className="zp-btn-ghost">دەربارەی ئێمە</Link>
+            <Link href="/catalog" className="zp-btn-primary">
+              {t("home_cta_collections")}
+            </Link>
+            <Link href="/about" className="zp-btn-ghost">
+              {t("home_cta_about")}
+            </Link>
           </div>
         </div>
 
@@ -102,8 +98,8 @@ export default async function Home() {
             <div className="zp-feature-icon">
               <FeatureIcon type={f.key} />
             </div>
-            <h3>{f.label}</h3>
-            <p>{f.desc}</p>
+            <h3>{t(f.t)}</h3>
+            <p>{t(f.d)}</p>
           </div>
         ))}
       </section>
@@ -111,46 +107,50 @@ export default async function Home() {
       {/* کۆلێکشنە هەڵبژاردەکان */}
       <section className="zp-home-section">
         <div className="zp-home-section-head">
-          <h2>کۆلێکشنە هەڵبژاردەکان</h2>
-          <p>تامەزرۆیەک لە جوانترین دیزاینەکانمان</p>
+          <h2>{t("home_featured_title")}</h2>
+          <p>{t("home_featured_sub")}</p>
         </div>
 
         <div className="zp-grid">
           {products.map((p) => (
             <Link key={p.id} href={`/catalog/${p.code}`} className="zp-card">
               <div className="zp-card-img">
-                <img src={p.image_url} alt={p.title_ku} />
+                <img src={p.image_url} alt={localized(p, "title", lang)} />
               </div>
               <div className="zp-card-body">
-                <h3 className="zp-card-title">{p.title_ku}</h3>
-                <p className="zp-card-code">کۆد: {p.code}</p>
-                <span className="zp-card-cta">داوای نرخ ←</span>
+                <h3 className="zp-card-title">{localized(p, "title", lang)}</h3>
+                <p className="zp-card-code">
+                  {t("code_label")}: {p.code}
+                </p>
+                <span className="zp-card-cta">{t("card_cta")}</span>
               </div>
             </Link>
           ))}
         </div>
 
         <div className="zp-home-section-cta">
-          <Link href="/catalog" className="zp-btn-primary">بینینی هەموو ١١٤ مۆدێل</Link>
+          <Link href="/catalog" className="zp-btn-primary">
+            {t("home_view_all")}
+          </Link>
         </div>
       </section>
 
       {/* بۆچی زۆن پارکێت؟ */}
       <section className="zp-home-promise">
         <div className="zp-promise-inner">
-          <h2>بۆچی زۆن پارکێت؟</h2>
+          <h2>{t("home_why_title")}</h2>
           <div className="zp-promise-grid">
             <div className="zp-promise-item">
-              <h3>هەڵبژاردەیەکی تایبەت</h3>
-              <p>هەر ١١٤ مۆدێلەکەمان بە وردی هەڵبژێردراون؛ تەنها ئەوانەی شایانی ماڵی تۆن.</p>
+              <h3>{t("why1_t")}</h3>
+              <p>{t("why1_d")}</p>
             </div>
             <div className="zp-promise-item">
-              <h3>کوالیتیی بەرز</h3>
-              <p>کەرەستەی بەهێز کە بۆ ساڵانێکی زۆر جوانی و ڕەنگی خۆی دەپارێزێت.</p>
+              <h3>{t("why2_t")}</h3>
+              <p>{t("why2_d")}</p>
             </div>
             <div className="zp-promise-item">
-              <h3>گەیاندنی نیشتیمانی</h3>
-              <p>لە هەر پارێزگایەک بیت، پارکێتەکەت بەبێ سنوور دەگاتە دەستت.</p>
+              <h3>{t("why3_t")}</h3>
+              <p>{t("why3_d")}</p>
             </div>
           </div>
         </div>
@@ -158,12 +158,11 @@ export default async function Home() {
 
       {/* بانگهێشتی کۆتایی */}
       <section className="zp-home-cta-band">
-        <h2>ماڵەکەت شایانی جوانترینە</h2>
-        <p>
-          مۆدێلە دڵخوازەکانت هەڵبژێرە و داواکارییەکەت بنێرە — ئێمە بە باشترین نرخ
-          و خزمەت پەیوەندیت پێوە دەکەین.
-        </p>
-        <Link href="/catalog" className="zp-btn-light">دەستپێبکە</Link>
+        <h2>{t("home_band_title")}</h2>
+        <p>{t("home_band_text")}</p>
+        <Link href="/catalog" className="zp-btn-light">
+          {t("home_band_cta")}
+        </Link>
       </section>
     </main>
   );
